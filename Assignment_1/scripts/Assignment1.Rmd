@@ -1,0 +1,55 @@
+---
+title: "Assignment_1"
+output: html_notebook
+---
+
+For this assignment I am emulating Wang et al 2020,"Genome-wide selection and genetic improvement during modern maize breeding", published in Nature Genetics. This paper has a diverse analysis of lines developed from the 1960's to the 2010's. They started with 350 elete inbred corn lines developed in both the US and China. Lines were also selected based on data availability. Plants were grown and phenotyped in four locations over two years yeilding 8 total environments. A randomized complete block design was utilized in all field plots. Genomic DNA was isolated from these plants using the CTAB method and sequenced using Illumina X-ten 150-Bp PE NGS technology. These sequences showed an average read depth of 10 to 29 reads. 
+
+After sequencing the reads went under quality control using FastQC (v.0.10.1) and trimmomatic (v.0.36) to assess quality and trim reads. BWA mem (v.0.7.13) was used to map the qaulity reads to the B73 reference genome. Varients were then called using GATK44 (HaplotypeCaller function; v.3.5-0-g36282e4). Only variants with a QD > 2.0, FS < 60.0, MQ > 20.0, MQRankSum > –12.5 and ReadPosRankSum > –8.0 were kept. SnpEff (v.4.3a) was then used to annotate the SNP variants using gene model Zea_mays.AGPv3.31.chr.gff3.gz. 
+
+For the selective sweep the authors compared lines developed in the 1960's-1970's, 1980's-1990's, and 2000's to 2010's using a composit likelyhood approach. They used the physical distance between called SNP variants to estimate the genetic distance between them. They consucted selective sweeps using a 100bp step and a 0.05cm sliding window grouped 10kb regions into features. A XP-CLR score and selection coeficient was calculated by averaging the 100bp steps in each feature. Genes indentified within each sweep were determined by if they fell within the sweep or were closest to the peak if no gene coding regions were found in the sweep itself. 
+
+The reference genome used was the B73 reference genome (RefGen_v3)
+
+First make a .txt file with the SRR numbers from the publication. In this case I selected 5 plants from 1960-1970 and five plants from 2000-2010. Name the text file "SRR_Acc_List.txt".
+```{r}
+SRR11301903
+SRR11301638
+SRR11301817
+SRR11301741
+SRR11301911
+SRR11301594
+SRR11302096
+SRR11301912
+SRR11301641
+SRR11302080
+```
+
+Next make a perl file called "get_SRR_file_slurm.pl". This perl script reads the list of SRRs compiled in "SRR_Acc_List.txt" and submits independent slurm jobs to download the data from NCBI. I had help from Gen Xu on this section. 
+```{perl}
+open(E,">run.txt");
+open(T,"SRR_Acc_List.txt")||die "Can't open your file!";
+while(<T>)
+{
+        chomp;
+                $out="Download_$_\.slurm";
+                        open(R,">$out");
+                $l="prefetch $_ -O SRA";
+        print R
+"#!/bin/sh
+#SBATCH --job-name=$_
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --time=40:00:00
+#SBATCH --mem=10G
+#SBATCH --error=$_\.err
+#SBATCH --output=$_\.out
+#SBATCH --licenses=common
+module load SRAtoolkit/2.10
+$l";
+print E "sbatch $out\n";
+        }
+```
+
+The genome and gene models for maize B73 was downloaded using the wget command from ensemble plants. https://plants.ensembl.org/Zea_mays/Info/Index
+
