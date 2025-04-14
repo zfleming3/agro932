@@ -1,0 +1,9 @@
+# Ignore all .log files
+*.log
+
+#Ignore all .err files
+*.err
+
+#Ignore Data Directories
+/work/agro932/zfleming3/agro932/Assignment_1/data
+/work/agro932/zfleming3/agro932/Assignment_2/data
