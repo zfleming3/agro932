@@ -17,9 +17,10 @@ module load samtools/1.20 bcftools/1.21
 
 ### Run `mpileup` to generate VCF format
 #ls sorted*bam > bamlist.txt
-samtools mpileup -a -f B73_Ref.fa -b bamlist.txt | bcftools call -mv -Ob -o snps.bcf
+bcftools mpileup -f B73_Ref.fa -b bamlist.txt | bcftools call -cv -Ob -o snps2.bcf
+#samtools mpileup -a -f B73_Ref.fa -b bamlist.txt > pileup.txt
 #bcftools call output.bcf -cv -Ob -o snps.bcf
 
 ### Extract allele frequency at each position
-#bcftools query -f '%CHROM %POS %AF1\n' snps.bcf > frq.txt
-#bcftools query -f '%CHROM %POS %REF %ALT [\t%GT]\n' snps.bcf > geno.txt
+bcftools query -f '%CHROM %POS %AF1\n' snps2.bcf > frq2.txt
+bcftools query -f '%CHROM %POS %REF %ALT [\t%GT]\n' snps2.bcf > geno2.txt
