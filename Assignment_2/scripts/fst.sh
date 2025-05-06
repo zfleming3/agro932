@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -D /work/agro932/zfleming3/agro932/Assignment_2/data #Project directory
+#SBATCH -D /work/agro932/zfleming3/agro932/Assignment_2/scripts #Project directory
 #SBATCH -o /work/agro932/zfleming3/agro932/Assignment_2/cache/err_out/fst.out
 #SBATCH -e /work/agro932/zfleming3/agro932/Assignment_2/cache/err_out/fst.err
 #SBATCH -J fst #Job name

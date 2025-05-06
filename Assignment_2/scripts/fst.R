@@ -1,5 +1,6 @@
+setwd("/work/agro932/zfleming3/agro932/Assignment_2/data")
 #Load genotype text generated from snp_calls.sh
-geno <- read.table("geno.txt", header=FALSE)
+geno <- read.table("geno2.txt", header=FALSE)
 
 #pull headder names and make a vector
 names(geno) <- c("chr", "pos", "ref", "alt", "l1", "l2", "l3", "l4", "l5")
