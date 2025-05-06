@@ -1,0 +1,17 @@
+#!/bin/bash
+#SBATCH -D /work/agro932/zfleming3/agro932/Assignment_2/scripts #Project direct>
+#SBATCH -o /work/agro932/zfleming3/agro932/Assignment_2/cache/err_out/gff.out
+#SBATCH -e /work/agro932/zfleming3/agro932/Assignment_2/cache/err_out/gff.err
+#SBATCH -J gff #Job name
+#SBATCH -t 04:00:00 #Job time limit
+#SBATCH --mem=32G # Memory request
+#SBATCH --ntasks=1
+#SBATCH --mail-user=zfleming3@unl.edu #Email updates
+#SBATCH --mail-type=END #email if ends
+#SBATCH --mail-type=FAIL #email if fails
+
+#Load R
+module load R/4.3
+
+#Run the R script
+Rscript gff.R
