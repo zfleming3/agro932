@@ -34,3 +34,4 @@ gm <- subset(g, strand %in% "-")
 dim(gm) # 82
 #output gene list
 fwrite(g, "B73_gene.txt", sep="\t", row.names = FALSE, quote=FALSE)
+

@@ -4,7 +4,7 @@
 #SBATCH -e /work/agro932/zfleming3/agro932/Assignment_2/cache/err_out/fst.err
 #SBATCH -J fst #Job name
 #SBATCH -t 04:00:00 #Job time limit
-#SBATCH --mem=16G # Memory request
+#SBATCH --mem=32G # Memory request
 #SBATCH --ntasks=1
 #SBATCH --mail-user=zfleming3@unl.edu #Email updates
 #SBATCH --mail-type=END #email if ends
