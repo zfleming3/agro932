@@ -13,7 +13,7 @@ This is a repository for files related to Biometrics. Specifically the repositor
 ### Assignment 2
 - [x] Add a homework 2 directory to the current repository.
 - [x] Address the comments made on Homework one when it comes to repository organization.
-- [ ] Maually compute the FST for both subpopulations using real-world data.
-- [ ] Provide the SLURM scripts, ignore err files and large data files.
+- [x] Maually compute the FST for both subpopulations using real-world data.
+- [x] Provide the SLURM scripts, ignore err files and large data files.
 - [ ] Output files should be tracked and visualized
 
